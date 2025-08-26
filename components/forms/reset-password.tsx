@@ -35,7 +35,7 @@ const formSchema = z.object({
   password:z.string().min(8),
 })
 
-export function LoginForm({
+export function ResetPasswordForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {

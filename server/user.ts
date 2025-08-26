@@ -11,7 +11,7 @@ import { auth } from "../lib/auth"; // path to your Better Auth server instance
                 password
             },
         });
-        return{success:true, messsage:'Signed in Successfully'};
+        return{success:true, message:'Signed in Successfully'};
     }catch(error){
         const e = error as Error;
         return { success:false,message:e.message || "failed to sign in"}
