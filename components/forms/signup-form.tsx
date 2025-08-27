@@ -61,6 +61,11 @@ export function SignupForm({
         return;
       }
 
+      if (values.password !== values.confirmPassword) {
+        toast.error("Passwords do not match");
+        return;
+      }
+
       const response = await signupUser(
         values.email,
         values.password,

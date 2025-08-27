@@ -54,6 +54,7 @@ export function ForgotPasswordForm({
       setIsLoading(true);
       const {error} = await authClient.forgetPassword({
         email:values.email,
+        redirectTo:'/reset-password',
       });
       if(!error){
         toast.success("Please check your email for password reset link.");
@@ -77,7 +78,7 @@ export function ForgotPasswordForm({
         <CardHeader>
           <CardTitle>Forgot your NoteSnips Account Password?</CardTitle>
           <CardDescription>
-            Enter your email below to login to your Account!
+            Enter your email below to reset to your account Password!
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-
+import { useSearchParams } from "next/navigation"
 
 import {
   Form,
@@ -29,10 +29,11 @@ import { toast } from 'sonner'
 import {  Loader2 } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { authClient } from "@/lib/auth-client"
 
 const formSchema = z.object({
-  email:z.email(),
   password:z.string().min(8),
+  confirmPassword:z.string().min(8),
 })
 
 export function ResetPasswordForm({
@@ -40,13 +41,17 @@ export function ResetPasswordForm({
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
+
   const [isLoading,setIsLoading] = useState(false);
    // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email:'',
       password:'',
+      confirmPassword:'',
     },
   })
  
@@ -55,14 +60,23 @@ export function ResetPasswordForm({
     console.log(values)
     try{
       setIsLoading(true);
-      const response = await signinUser(values.email,values.password);
-      if(response.success){
-        toast.success(response.message);
-        console.log(response);
-        router.push('/dashboard');
+
+      if (values.password !== values.confirmPassword) {
+        toast.error("Passwords do not match");
+        return;
+      }
+
+      const {error} = await authClient.resetPassword({
+        newPassword:values.password,
+        token:token ?? '',
+      })
+    
+      if(!error){
+        toast.success('Password Reset Successfully');
+        router.push('/login');
       } 
       else{
-        toast.error(response.message);
+        toast.error(error.message);
       }
       
     }catch(error){
@@ -78,59 +92,48 @@ export function ResetPasswordForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Login to your NoteSnips account</CardTitle>
+          <CardTitle>Reset Your Password for NoteSnips</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your new password below to reset your password
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="flex flex-col gap-6">
-              <div className="grid gap-3">
+                <div className="grid gap-3">
                 <FormField
                   control={form.control}
-                    name="email"
+                    name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>New Password</FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter Your Email Address" {...field} />
+                          <Input type="password" placeholder="Enter Your New Password" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
               </div>
-              <div className="grid gap-3">
+                 <div className="grid gap-3">
                 <FormField
                   control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center">
-                      <FormLabel>Username</FormLabel>
-                      <Link
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </Link>
-                      </div>
-                      <FormControl>
-                        <Input type="password" placeholder="Enter Your Password" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    name="confirmPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Confirm Password</FormLabel>
+                        <FormControl>
+                          <Input type="password" placeholder="Enter Your Password Again" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? <Loader2 className="size-4 animate-spin"/> : 'Login'}
-                </Button>
-                <Button variant="outline" className="w-full">
-                  Login with Google
                 </Button>
               </div>
             </div>
