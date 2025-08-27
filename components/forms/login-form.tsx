@@ -29,6 +29,7 @@ import { toast } from 'sonner'
 import {  Loader2 } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { authClient } from "@/lib/auth-client"
 
 const formSchema = z.object({
   email:z.email(),
@@ -50,6 +51,13 @@ export function LoginForm({
     },
   })
  
+  const signIn = async () => {
+  await authClient.signIn.social({
+    provider: "google",
+    callbackURL: "/dashboard",
+  });
+};
+
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
@@ -129,7 +137,11 @@ export function LoginForm({
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? <Loader2 className="size-4 animate-spin"/> : 'Login'}
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" 
+                  onClick={signIn} 
+                  className="w-full"
+                  type="button"
+                >
                   Login with Google
                 </Button>
               </div>

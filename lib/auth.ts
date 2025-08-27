@@ -10,6 +10,13 @@ import PasswordReset from "@/components/emails/email-reset";
 const resend = new Resend(process.env.RESEND_API_KEY); 
 
 export const auth = betterAuth({
+
+   socialProviders: {
+        google: { 
+            clientId: process.env.GOOGLE_CLIENT_ID as string, 
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string, 
+        }, 
+    },
   
     emailAndPassword: {
     enabled: true, 
