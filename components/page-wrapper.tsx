@@ -3,21 +3,30 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { JSX } from "react"
+import { Fragment, JSX } from "react"
 import { SidebarTrigger } from "./ui/sidebar"
 import { Logout } from "./logout"
 import { ModeToggle } from "./mode-toggle"
 
-interface PageWrapperProps{
-    children:React.ReactNode,
-    breadcrumbs:{
-        map(arg0: (Breadcrumb: any) => JSX.Element): import("react").ReactNode
-        label : string,
-        href : string
-    }
-}
+// interface PageWrapperProps{
+//     children:React.ReactNode,
+//     breadcrumbs:{
+//         map(arg0: (Breadcrumb: any) => JSX.Element): import("react").ReactNode
+//         label : string,
+//         href : string
+//     }
+// }
 
+interface PageWrapperProps{
+    children: React.ReactNode,
+    breadcrumbs: {
+        label: string,
+        href: string
+    }[]
+}
 export function PageWrapper({children,breadcrumbs}:PageWrapperProps){
     return(
         <div className="flex flex-col gap-4 ">
@@ -29,12 +38,15 @@ export function PageWrapper({children,breadcrumbs}:PageWrapperProps){
                 
             <Breadcrumb>
                 <BreadcrumbList>
-                    {breadcrumbs.map((Breadcrumb)=>(
-                        <BreadcrumbItem key={Breadcrumb.label}>
+                    {breadcrumbs.map((Breadcrumb,index)=>(
+                        <Fragment key={Breadcrumb.label}>
+                        <BreadcrumbItem >
                             <BreadcrumbLink href={Breadcrumb.href}>
                                 {Breadcrumb.label}
                             </BreadcrumbLink>
                         </BreadcrumbItem>
+                        {index !== breadcrumbs.length - 1 && <BreadcrumbSeparator />}
+                        </Fragment>
                     ))}
                 </BreadcrumbList>
                 </Breadcrumb>
