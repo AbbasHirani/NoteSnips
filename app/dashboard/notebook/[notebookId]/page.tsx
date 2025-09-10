@@ -3,9 +3,13 @@ import { PageWrapper } from "@/components/page-wrapper"
 import NoteCard from "@/components/notecard";
 import { CreateNote } from "@/components/createNote";
 
+interface PageProps {
+    params?: Promise<{ notebookId: string }>
+    searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}
 
-export default async function NoteBookPage({ params }: { params: { notebookId: string } }) {
-    const { notebookId } = params;
+export default async function NoteBookPage({ params }: PageProps) {
+    const { notebookId } = await (params ?? Promise.resolve({ notebookId: "" }));
 
     console.log("notebookId:", notebookId);
     

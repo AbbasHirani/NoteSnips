@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Suspense } from "react"
 
 import { getAllNotebooks } from "../server/notebook";
 import { SidebarData } from "./sidebar-data"
@@ -46,7 +47,9 @@ const data = {
             NoteSnips
           </Link>
         </div>
-        <SearchForm />
+        <Suspense fallback={null}>
+          <SearchForm />
+        </Suspense>
       </SidebarHeader>
       <SidebarContent className="gap-0">
         {/* We create a collapsible SidebarGroup for each parent. */}

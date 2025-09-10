@@ -4,9 +4,13 @@ import RichTextEditor from "@/components/rich-text-editor";
 import { JSONContent } from "@tiptap/react";
 import { getNotebookById } from "@/server/notebook";
 
+interface PageProps {
+  params?: Promise<{ notebookId: string; noteId: string }>
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}
 
-export default async function NotePage({ params }: { params: { noteId: string } }) {
-    const { noteId } = await params;
+export default async function NotePage({ params }: PageProps) {
+    const { noteId } = await (params ?? Promise.resolve({ notebookId: "", noteId: "" }));
 
     console.log("noteId:", noteId);
 
