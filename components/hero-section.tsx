@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { ArrowRight, ChevronRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { TextEffect } from '@/components/ui/text-effect'
@@ -19,7 +19,7 @@ const transitionVariants = {
             filter: 'blur(0px)',
             y: 0,
             transition: {
-                type: 'spring',
+                type: 'spring' as const,
                 bounce: 0.3,
                 duration: 1.5,
             },
@@ -135,12 +135,12 @@ export default function HeroSection() {
                                             asChild
                                             size="lg"
                                             className="rounded-xl px-5 text-base">
-                                            <Link href="#link">
+                                            <Link href="/dashboard">
                                                 <span className="text-nowrap">Try NoteSnips</span>
                                             </Link>
                                         </Button>
                                     </div>
-                                    <Button
+                                    {/* <Button
                                         key={2}
                                         asChild
                                         size="lg"
@@ -149,7 +149,7 @@ export default function HeroSection() {
                                         <Link href="#link">
                                             <span className="text-nowrap">View Demo</span>
                                         </Link>
-                                    </Button>
+                                    </Button> */}
                                 </AnimatedGroup>
                             </div>
                         </div>
@@ -174,14 +174,14 @@ export default function HeroSection() {
                                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
                                     <Image
                                         className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
-                                        src="/mail2.png"
+                                        src="/NoteSnip-dark.png"
                                         alt="app screen"
                                         width="2700"
                                         height="1440"
                                     />
                                     <Image
                                         className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
-                                        src="/mail2-light.png"
+                                        src="/NoteSnip-light.png"
                                         alt="app screen"
                                         width="2700"
                                         height="1440"

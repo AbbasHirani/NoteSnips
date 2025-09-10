@@ -2,8 +2,7 @@
 
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { createNoteBook } from "@/server/notebook";
+import { useForm } from "react-hook-form" 
 import { toast } from "sonner";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -30,11 +29,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
-import { authClient } from "@/lib/auth-client";
 import { Loader2 } from "lucide-react";
+import { createNote } from "@/server/notes";
 
-export const CreateNotebook = () => {
+export const CreateNote = ({notebookId } : {notebookId : string}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -50,18 +48,12 @@ export const CreateNotebook = () => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try{
-    const userId = (await authClient.getSession()).data?.user?.id;
-
-    if(!userId){
-        toast.error("User not found");
-        return;
-    }
     setIsLoading(true);  
-    const response = await createNoteBook({...values,userId});
+    const response = await createNote({title:values.name,content:{},notebookId});
     if (response.success){
         form.reset();
         setIsOpen(false);
-        toast.success(response.message || "Notebook created successfully");
+        toast.success(response.message || "Note created successfully");
         router.refresh();
     }
     else{
@@ -80,13 +72,13 @@ export const CreateNotebook = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="w-max"> Create Notebook</Button>
+        <Button className="w-max"> Create Note</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create A new Notebook</DialogTitle>
+          <DialogTitle>Create A new Note</DialogTitle>
           <DialogDescription>
-            Enter the name of your new notebook
+            Enter the name of your new note
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -100,7 +92,7 @@ export const CreateNotebook = () => {
                     <FormItem>
                       <FormLabel>Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter Your Notebook Name" {...field} />
+                        <Input placeholder="Enter Your Note Name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

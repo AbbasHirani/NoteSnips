@@ -1,9 +1,7 @@
-import { Logout } from "@/components/logout";
 import { PageWrapper } from "@/components/page-wrapper";
-
 import { getAllNotebooks } from "@/server/notebook";
-import { not } from "drizzle-orm";
 import { CreateNotebook } from "@/components/createNotebook";
+import NoteBookCard from "@/components/noteBookCard";
 
 export default async function dashboard() {
     const notebooks = await getAllNotebooks();
@@ -12,12 +10,13 @@ export default async function dashboard() {
             <h1>Notebooks</h1>
 
             <CreateNotebook/>
-            
-            {notebooks.success &&
-                Array.isArray(notebooks?.data) &&
-                notebooks.data.map((notebook) => (
-                    <div key={notebook.id}>{notebook.name}</div>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {notebooks.success &&
+                    Array.isArray(notebooks?.data) &&
+                    notebooks.data.map((notebook) => (
+                        <NoteBookCard key={notebook.id} notebook={notebook} />
                 ))}
+            </div>
             {notebooks.success && Array.isArray(notebooks.data) && notebooks.data.length === 0 && <div>No notebooks found</div>}
 
           

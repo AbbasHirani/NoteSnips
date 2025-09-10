@@ -1,17 +1,12 @@
 'use client'
 import Link from 'next/link'
-import { Logo } from '@/components/logo'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import React from 'react'
 import { cn } from '@/lib/utils'
-import { ModeToggle } from './mode-toggle'
+import { ModeSwitcher } from './mode-switcher'
+const menuItems : string[] = [
 
-const menuItems = [
-    { name: 'Features', href: '#link' },
-    { name: 'Solution', href: '#link' },
-    { name: 'Pricing', href: '#link' },
-    { name: 'About', href: '#link' },
 ]
 
 export const HeroHeader = () => {
@@ -53,11 +48,11 @@ export const HeroHeader = () => {
                             <ul className="flex gap-8 text-sm">
                                 {menuItems.map((item, index) => (
                                     <li key={index}>
-                                        <Link
+                                        {/* <Link
                                             href={item.href}
                                             className="text-muted-foreground hover:text-accent-foreground block duration-150">
                                             <span>{item.name}</span>
-                                        </Link>
+                                        </Link> */}
                                     </li>
                                 ))}
                             </ul>
@@ -68,17 +63,20 @@ export const HeroHeader = () => {
                                 <ul className="space-y-6 text-base">
                                     {menuItems.map((item, index) => (
                                         <li key={index}>
-                                            <Link
+                                            {/* <Link
                                                 href={item.href}
                                                 className="text-muted-foreground hover:text-accent-foreground block duration-150">
                                                 <span>{item.name}</span>
-                                            </Link>
+                                            </Link> */}
                                         </li>
                                     ))}
                                 </ul>
                             </div>
                             <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                                <ModeToggle/>
+                                <ModeSwitcher/>
+                                
+                                {/* {!sessionCookie && <span>Not signed in</span>} */}
+
                                 <Button
                                     asChild
                                     variant="outline"
@@ -100,7 +98,7 @@ export const HeroHeader = () => {
                                     asChild
                                     size="sm"
                                     className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}>
-                                    <Link href="#">
+                                    <Link href="/dashboard">
                                         <span>Get Started</span>
                                     </Link>
                                 </Button>

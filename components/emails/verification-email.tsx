@@ -20,7 +20,7 @@ interface VerificationEmailProps {
 }
 
 const VerificationEmail = (props: VerificationEmailProps) => {
-  const { userName, verificationUrl, companyName } = props;
+  const { verificationUrl, companyName } = props;
 
   return (
     <Html lang="en" dir="ltr">
@@ -62,7 +62,7 @@ const VerificationEmail = (props: VerificationEmailProps) => {
               </Section>
 
               <Text className="text-[14px] text-gray-600 mb-[16px] m-0">
-                If the button above doesn't work, you can also copy and paste the following link into your browser:
+                If the button above doesn`&apos`t work, you can also copy and paste the following link into your browser:
               </Text>
               <Text className="text-[14px] text-blue-600 break-all mb-[24px] m-0">
                 <Link href={verificationUrl} className="text-blue-600 underline">
@@ -71,10 +71,10 @@ const VerificationEmail = (props: VerificationEmailProps) => {
               </Text>
 
               <Text className="text-[16px] text-gray-700 mb-[8px] m-0">
-                If you didn't create an account with us, you can safely ignore this email.
+                If you didn`&apos`t create an account with us, you can safely ignore this email.
               </Text>
               <Text className="text-[16px] text-gray-700 m-0">
-                Need help? Contact our support team - we're here to assist you!
+                Need help? Contact our support team - we`&apos`re here to assist you!
               </Text>
             </Section>
 

@@ -20,7 +20,7 @@ interface PasswordResetProps {
   requestTime: string;
 }
 
-const PasswordReset = ({userName, resetUrl, companyName, requestTime}: PasswordResetProps) => {
+const PasswordReset = ({userName, resetUrl, companyName}: PasswordResetProps) => {
 
 
   return (
@@ -63,7 +63,7 @@ const PasswordReset = ({userName, resetUrl, companyName, requestTime}: PasswordR
               </Section>
 
               <Text className="text-[14px] text-gray-600 mb-[16px] m-0">
-                If the button above doesn't work, you can also copy and paste the following link into your browser:
+                If the button above doesn`&apos`t work, you can also copy and paste the following link into your browser:
               </Text>
               <Text className="text-[14px] text-blue-600 break-all mb-[32px] m-0">
                 <Link href={resetUrl} className="text-blue-600 underline">
@@ -77,7 +77,7 @@ const PasswordReset = ({userName, resetUrl, companyName, requestTime}: PasswordR
                   Security Notice
                 </Heading>
                 <Text className="text-[14px] text-yellow-700 mb-[8px] m-0">
-                  • If you didn't request this password reset, please ignore this email
+                  • If you didn`&apos`t request this password reset, please ignore this email
                 </Text>
                 <Text className="text-[14px] text-yellow-700 mb-[8px] m-0">
                   • Your current password will remain unchanged until you create a new one
@@ -88,7 +88,7 @@ const PasswordReset = ({userName, resetUrl, companyName, requestTime}: PasswordR
               </Section>
 
               <Text className="text-[16px] text-gray-700 mb-[8px] m-0">
-                If you're having trouble accessing your account or didn't request this reset, please contact our support team immediately.
+                If you`&apos`re having trouble accessing your account or didn`&apos`t request this reset, please contact our support team immediately.
               </Text>
               <Text className="text-[16px] text-gray-700 m-0">
                 Stay safe and secure!

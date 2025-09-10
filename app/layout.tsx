@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
-
+import {NuqsAdapter} from 'nuqs/adapters/next/app'
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link
           href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
           rel="stylesheet"
@@ -38,6 +38,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <NuqsAdapter>
       <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -47,6 +48,7 @@ export default function RootLayout({
             <Toaster/>
             {children}
           </ThemeProvider>
+          </NuqsAdapter>
       </body>
     </html>
   );

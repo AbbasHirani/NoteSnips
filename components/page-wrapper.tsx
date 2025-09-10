@@ -3,10 +3,9 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Fragment, JSX } from "react"
+import { Fragment } from "react"
 import { SidebarTrigger } from "./ui/sidebar"
 import { Logout } from "./logout"
 import { ModeToggle } from "./mode-toggle"

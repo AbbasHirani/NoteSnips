@@ -8,7 +8,7 @@ import { eq, not, sql } from "drizzle-orm";
 
 export const createNote = async (values:InsertNote)=>{
     try{   
-    const nokebook = await db.insert(notes).values(values);
+    await db.insert(notes).values(values);
 
     return {success:true, message:"Notebook created successfully"};
     }catch(error){
@@ -72,15 +72,50 @@ export const getNotebById = async (id: string) => {
 
 
 
-export const updateNote = async (id:string,values:InsertNote)=>{
-    try{
-        await db.update(notes).set(values).where(eq(notes.id,id));
-        return {success:true, message:"Note updated successfully"};
-    }catch(error){
-        const e = error as Error;
-        return {success:false, message:e.message || "failed to update note"};
+// export const updateNote = async (id:string,values:Partial <InsertNote>)=>{
+//     try{
+//         await db.update(notes).set(values).where(eq(notes.id,id));
+//         return {success:true, message:"Note updated successfully"};
+//     }catch(error){
+//         const e = error as Error;
+//         return {success:false, message:e.message || "failed to update note"};
+//     }
+// } 
+
+export const updateNote = async (id: string, values: any) => {
+  try {
+    console.log("updateNote called with:", id, values);
+    
+    // Get all notes first to handle the trimming issue
+    const allNotes = await db.select().from(notes);
+    console.log("All notes:", allNotes.map(n => ({ id: n.id, trimmed: n.id.trim() })));
+    
+    // Use JavaScript filter to match trimmed IDs
+    const matchingNotes = allNotes.filter(note => 
+      note.id.trim() === id.trim()
+    );
+    
+    if (matchingNotes.length === 0) {
+      console.log("No matching note found for ID:", id);
+      return { success: false, message: "Note not found" };
     }
-} 
+    
+    console.log("Found matching note:", matchingNotes[0]);
+    
+    // Update using the exact ID from database
+    const result = await db.update(notes)
+      .set(values)
+      .where(eq(notes.id, matchingNotes[0].id)); // Use the exact DB ID
+    
+    console.log("Update result:", result);
+    
+    return { success: true, message: "Note updated successfully" };
+  } catch (error) {
+    console.error("Update error:", error);
+    const e = error as Error;
+    return { success: false, message: e.message };
+  }
+};
 
 export const deleteNote = async (id:string)=>{
     try{
