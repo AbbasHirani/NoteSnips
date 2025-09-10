@@ -1,4 +1,10 @@
 import { ForgotPasswordForm } from "@/components/forms/forgot-password"
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Forgot Password | NoteSnips",
+  description: "Reset your NoteSnips password",
+};
 
 export default function page() {
   return (

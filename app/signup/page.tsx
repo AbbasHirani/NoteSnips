@@ -1,4 +1,10 @@
 import { SignupForm } from "@/components/forms/signup-form"
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sign Up | NoteSnips",
+  description: "Create a new NoteSnips account",
+};
 
 export default function Page() {
   return (

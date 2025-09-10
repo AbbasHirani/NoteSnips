@@ -2,10 +2,32 @@ import {getNotebookById} from "@/server/notebook"
 import { PageWrapper } from "@/components/page-wrapper"
 import NoteCard from "@/components/notecard";
 import { CreateNote } from "@/components/createNote";
+import { Metadata } from "next";
 
 interface PageProps {
     params?: Promise<{ notebookId: string }>
     searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { notebookId } = await (params ?? Promise.resolve({ notebookId: "" }));
+  
+  try {
+    const response = await getNotebookById(notebookId);
+    if (response.success && response.data) {
+      return {
+        title: `${response.data.name || 'Notebook'} | NoteSnips`,
+        description: `View and manage notes in ${response.data.name || 'Notebook'}`,
+      };
+    }
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+  }
+  
+  return {
+    title: "Notebook | NoteSnips",
+    description: "View and manage your notebook",
+  };
 }
 
 export default async function NoteBookPage({ params }: PageProps) {

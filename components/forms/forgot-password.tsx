@@ -100,7 +100,7 @@ export function ForgotPasswordForm({
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? <Loader2 className="size-4 animate-spin"/> : 'Login'}
+                  {isLoading ? <Loader2 className="size-4 animate-spin"/> : 'Get Reset Password Link'}
                 </Button>
               </div>
             </div>

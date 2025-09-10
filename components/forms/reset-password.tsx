@@ -131,7 +131,7 @@ export function ResetPasswordForm({
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? <Loader2 className="size-4 animate-spin"/> : 'reset password'}
+                  {isLoading ? <Loader2 className="size-4 animate-spin"/> : 'Reset Password!'}
                 </Button>
               </div>
             </div>
