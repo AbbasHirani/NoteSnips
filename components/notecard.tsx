@@ -68,9 +68,7 @@ export default function NoteCard({note}:NoteCardProps) {
         <Card>
         <CardHeader>
             <CardTitle> {note.title} </CardTitle>
-            <CardDescription>
-                {/* Card Description */}
-            </CardDescription>
+            <CardDescription>{note.createdAt?.toLocaleDateString() ?? 'No date'}</CardDescription>
         </CardHeader>
         <CardContent>
             {/* <p> Notes</p> */}

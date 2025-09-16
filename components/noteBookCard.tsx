@@ -74,10 +74,10 @@ export default function NoteBookCard({notebook}:NoteBookCardProps) {
         <Card>
         <CardHeader>
             <CardTitle> {notebook.name} </CardTitle>
-            <CardDescription>Card Description</CardDescription>
+            <CardDescription>{notebook.createdAt?.toLocaleDateString() ?? 'No date'}</CardDescription>
         </CardHeader>
         <CardContent>
-            <p> {notebook.notes?.length ?? 0} </p>
+            <p> {notebook.notes?.length ?? 0} Notes</p>
         </CardContent>
         <CardFooter className="flex justify-end gap-2">
             <Link href= {`/dashboard/notebook/${notebook.id}`}>
